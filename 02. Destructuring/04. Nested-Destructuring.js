@@ -196,13 +196,25 @@ Rule of thumb:
 {
   const data = {};
 
-  // data.user might be missing → = {}
-  // data.user.profile might be missing → = {}
-  // profile.name might be missing → default "Unknown"
-  const { user: { profile: { name = "Unknown" } = {} } = {} } = data;
+  const { 
+    user: { 
+      profile: { name = "Unknown" } = {} 
+    } = {} 
+  } = data;
 
-  console.log(name); // Output: Unknown
+  console.log(name); // "Unknown"
 }
+/*
+Why this works:
+data.user does not exist → fallback = {}
+data.user.profile does not exist → fallback = {}
+profile.name does not exist → default "Unknown"
+No crash, clean output
+
+Key takeaway:
+Each = {} guards one level of nesting.
+Each default (= "Unknown") guards one value.
+*/
 
 // -----------------------------------------------------------------------------
 // FUNCTION PARAM WITH NESTED DESTRUCTURING
@@ -293,3 +305,4 @@ Nested destructuring:
 Professionals use nested destructuring daily,
 especially when handling API responses and React props.
 */
+
